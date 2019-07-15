@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddafa7250695cac44bfe3d11e897647f, type: 3}
+  m_Name: DefaultIconsDb
+  m_EditorClassIdentifier: 
+  database:
+  - guid: d7f4b9f1a2280144e95738b810337629
+    icon: {fileID: 2800000, guid: beface08850902642a69784645435972, type: 3}
+    icon_16: {fileID: 2800000, guid: c73950005190ec94f8c44c60f103b833, type: 3}
+    assetName: Mati36
+  - guid: 8b043594aa1ae62488d5c07eea5b0869
+    icon: {fileID: 2800000, guid: 562c7380e4e37dc4da25e16252998bdb, type: 3}
+    icon_16: {fileID: 2800000, guid: e69511a63603e0d4aab5707237ba4fce, type: 3}
+    assetName: Scripts
+  - guid: 479068f1c8e98434185769df4787d986
+    icon: {fileID: 2800000, guid: 38020f7ed1dfcb54bbc06bb91ee69ec0, type: 3}
+    icon_16: {fileID: 2800000, guid: 04df5bb66f1177d4099c9bc9378bc6ed, type: 3}
+    assetName: Prefabs
+  - guid: 706c407943e9db3478862789804a4e97
+    icon: {fileID: 2800000, guid: 5129f99b9b10a224d92af5308d4390ab, type: 3}
+    icon_16: {fileID: 2800000, guid: c587c0f715a1c574f935dc32a2473594, type: 3}
+    assetName: Data
+  - guid: c06bacccf66f9f14ea6ad9d77f2d2e24
+    icon: {fileID: 2800000, guid: 8a366b87fc267e74e8e8d4b3177afb38, type: 3}
+    icon_16: {fileID: 2800000, guid: 601da5d782c819f49b35625975466b97, type: 3}
+    assetName: Player
+  - guid: c9d3fed2043a1574faaf4a0e02320956
+    icon: {fileID: 2800000, guid: 75e0966cce8b3ce47a741358cb3ee0de, type: 3}
+    icon_16: {fileID: 2800000, guid: 75e0966cce8b3ce47a741358cb3ee0de, type: 3}
+    assetName: Sounds
+  - guid: fec50b621857081449c775995cd6f1f3
+    icon: {fileID: 2800000, guid: 9fc28913860f7a84898f556e4d9d95ec, type: 3}
+    icon_16: {fileID: 2800000, guid: 86c2de0886a936b41a3a55265dba7878, type: 3}
+    assetName: Scenes
+  - guid: eb21f6b62c5053d4a929bfe0df5e81d0
+    icon: {fileID: 2800000, guid: fdd30ce66fa4ca74185f753480e9e185, type: 3}
+    icon_16: {fileID: 2800000, guid: 66f6c236748c6d44a9d5840b03689fe4, type: 3}
+    assetName: Sprites
+  - guid: c7de228ba5b54814c8f4787030b9d41b
+    icon: {fileID: 2800000, guid: 2ee3b3951d4bf8a45be091164f38e24e, type: 3}
+    icon_16: {fileID: 2800000, guid: 39e2539b5525f60489ab491610402a6d, type: 3}
+    assetName: Materials
+  - guid: 8d63cfdce6239be4dbae7598f48e9d57
+    icon: {fileID: 2800000, guid: beface08850902642a69784645435972, type: 3}
+    icon_16: {fileID: 2800000, guid: c73950005190ec94f8c44c60f103b833, type: 3}
+    assetName: Mati36
+  - guid: 8e06062ad62dae14f94d76cecaecc22c
+    icon: {fileID: 2800000, guid: 8a366b87fc267e74e8e8d4b3177afb38, type: 3}
+    icon_16: {fileID: 2800000, guid: 601da5d782c819f49b35625975466b97, type: 3}
+    assetName: Data
+  defaultIcon: {fileID: 0}
