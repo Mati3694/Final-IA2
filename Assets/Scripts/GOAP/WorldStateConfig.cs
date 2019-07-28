@@ -29,9 +29,11 @@ public class WorldStateConfig : ScriptableObject
     public float restLifeHeal = 10;
     public float trainCost = 4;
     public int trainWeaponUses = 10;
+    public float trainWithWeaponMultiplier = 2;
     public float trainAtkIncr = 2, trainMaxLifeIncr = 5;
     public float buyWeaponCost = 1;
     public int buyWeaponGoldNeeded = 20;
     public float workCost = 4;
     public int workGoldPay = 10;
+    public int swordMaxUses = 30;
 }

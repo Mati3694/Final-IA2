@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class HeroController : MonoBehaviour
 {
-    public WorldStateConfig worldConfig;
 
     public HeroModel model;
+
+    public Vector2 Position2D { get { return new Vector2(transform.position.x, transform.position.z); } }
 
     WorldState initialState;
     List<GoapAction<WorldState>> actions;
@@ -19,7 +20,7 @@ public class HeroController : MonoBehaviour
         Func<WorldState, bool> PlayerIsAlive = (state) => state.playerCurrLife > 0;
         Func<WorldState, bool> HasSword = (state) => state.currentWeapon == "Sword";
         Func<WorldState, int, WorldState> UseSword = (state, uses) => { state.weaponUsesRemaining -= uses; if (state.weaponUsesRemaining <= 0) state.currentWeapon = "None"; return state; };
-        Func<WorldState, float> GetPlayerDmg = (state) => (state.playerBaseAtk * (state.playerSeriouslyInjured ? 0.5f : 1f)) + (HasSword(state) ? worldConfig.swordAtkDmg : 0);
+        Func<WorldState, float> GetPlayerDmg = (state) => (state.playerBaseAtk * (state.playerSeriouslyInjured ? 0.5f : 1f)) + (HasSword(state) ? World.Config.swordAtkDmg : 0);
 
         actions = new List<GoapAction<WorldState>>
         {
@@ -29,13 +30,13 @@ public class HeroController : MonoBehaviour
                 (state) =>
                     {
                         state.bossLife -= GetPlayerDmg(state);
-                        state.playerCurrLife -= state.bossAtk;
+                        state.playerCurrLife -= World.Config.bossAtk;
                         if(HasSword(state))
                             state = UseSword(state,1);
-                        if(state.playerCurrLife < worldConfig.playerInjuredLife) state.playerSeriouslyInjured = true;
+                        if(state.playerCurrLife < World.Config.playerInjuredLife) state.playerSeriouslyInjured = true;
                         return state;
                     }, //effect
-                worldConfig.attackCost //cost
+                World.Config.attackCost //cost
                 ),
 
             new GoapAction<WorldState>(
@@ -43,12 +44,12 @@ public class HeroController : MonoBehaviour
                 (state) => PlayerIsAlive(state), //precondition
                 (state) =>
                     {
-                        state.playerCurrLife += worldConfig.restLifeHeal;
+                        state.playerCurrLife += World.Config.restLifeHeal;
                         state.playerCurrLife = Mathf.Clamp(state.playerCurrLife, 0, state.playerMaxLife);
                         state.playerSeriouslyInjured = false;
                         return state;
                     }, //effect
-                worldConfig.restCost //cost
+                World.Config.restCost //cost
                 ),
 
             new GoapAction<WorldState>(
@@ -56,26 +57,26 @@ public class HeroController : MonoBehaviour
                 (state) => PlayerIsAlive(state) && !state.playerSeriouslyInjured, //precondition
                 (state) =>
                     {
-                        state.playerBaseAtk += worldConfig.trainAtkIncr;
-                        state.playerMaxLife += worldConfig.trainMaxLifeIncr;
+                        state.playerBaseAtk += HasSword(state) ? World.Config.trainAtkIncr * World.Config.trainWithWeaponMultiplier : World.Config.trainAtkIncr;
+                        state.playerMaxLife += World.Config.trainMaxLifeIncr;
                         if(HasSword(state))
-                             state = UseSword(state,worldConfig.trainWeaponUses);
+                             state = UseSword(state,World.Config.trainWeaponUses);
                         return state;
                     }, //effect
-                worldConfig.trainCost //cost
+                World.Config.trainCost //cost
                 ),
 
             new GoapAction<WorldState>(
                 "Buy Weapon",
-                (state) => PlayerIsAlive(state) && state.playerGold >= worldConfig.buyWeaponGoldNeeded, //precondition
+                (state) => PlayerIsAlive(state) && state.playerGold >= World.Config.buyWeaponGoldNeeded, //precondition
                 (state) =>
                     {
                         state.currentWeapon = "Sword";
-                        state.weaponUsesRemaining = 30;
-                        state.playerGold -= worldConfig.buyWeaponGoldNeeded;
+                        state.weaponUsesRemaining = World.Config.swordMaxUses;
+                        state.playerGold -= World.Config.buyWeaponGoldNeeded;
                         return state;
                     }, //effect
-                worldConfig.buyWeaponCost//cost
+                World.Config.buyWeaponCost//cost
                 ),
 
             new GoapAction<WorldState>(
@@ -83,10 +84,10 @@ public class HeroController : MonoBehaviour
                 (state) => PlayerIsAlive(state) && !state.playerSeriouslyInjured, //precondition
                 (state) =>
                     {
-                        state.playerGold += worldConfig.workGoldPay;
+                        state.playerGold += World.Config.workGoldPay;
                         return state;
                     }, //effect
-                worldConfig.workCost//cost
+                World.Config.workCost//cost
                 )
         };
 
@@ -109,33 +110,28 @@ public class HeroController : MonoBehaviour
     {
         initialState = new WorldState()
         {
-            playerMaxLife = worldConfig.playerMaxLife,
-            playerCurrLife = worldConfig.playerMaxLife,
-            playerBaseAtk = worldConfig.playerBaseAtk,
-            playerGold = worldConfig.playerGold,
+            playerMaxLife = World.Config.playerMaxLife,
+            playerCurrLife = World.Config.playerMaxLife,
+            playerBaseAtk = World.Config.playerBaseAtk,
+            playerGold = World.Config.playerGold,
             playerSeriouslyInjured = false,
 
-            currentWeapon = worldConfig.currentWeapon,
-            weaponUsesRemaining = worldConfig.weaponUsesRemaining,
+            currentWeapon = World.Config.currentWeapon,
+            weaponUsesRemaining = World.Config.weaponUsesRemaining,
 
-            bossLife = worldConfig.bossMaxLife,
-            bossAtk = worldConfig.bossAtk
+            bossLife = World.Config.bossMaxLife
         };
 
-        Debug.Log("Calculating GOAP...");
-        currentActionsList = GOAP.Run(initialState, (state) => state.bossLife <= 0, actions, state => state.bossLife / worldConfig.bossMaxLife * worldConfig.bossLifeWeight, worldConfig.maxSteps);
+        Debug.Log("--Calculating GOAP...--".Bold());
+        currentActionsList = GOAP.Run(initialState, (state) => state.bossLife <= 0, actions, state => state.bossLife / World.Config.bossMaxLife * World.Config.bossLifeWeight, World.Config.maxSteps);
 
-        if (currentActionsList == null)
-        {
-            Debug.Log("No possible actions");
-            return;
-        }
+        if (currentActionsList == null) { Debug.Log("No possible actions"); return; }
 
-        //foreach (var action in currentActionsList)
-        //    Debug.Log(action.name);
+        foreach (var action in currentActionsList)
+            Debug.Log(action.name);
 
 
-        model.ResetModel(worldConfig);
+        model.ResetModel(World.Config);
 
         StopAllCoroutines();
         StartCoroutine(ExecuteGOAP());
@@ -144,46 +140,83 @@ public class HeroController : MonoBehaviour
     IEnumerator ExecuteGOAP()
     {
         if (currentActionsList == null) yield break;
-        Debug.Log("Executing GOAP...");
+        Debug.Log("--Executing GOAP...--".Bold());
         foreach (var action in currentActionsList)
         {
             //Debug.Log("Executing action : " + action.name);
             yield return actionRoutineDict[action.name]();
-            Debug.Log("Waiting for " + action.cost + " seconds");
-            yield return new WaitForSeconds(action.cost);
+            //Debug.Log("Waiting for " + action.cost + " seconds");
+            //yield return new WaitForSeconds(action.cost);
+            yield return new WaitForSeconds(1);
         }
 
         Debug.Log("Finished GOAP");
     }
 
+    public float distanceToInteract = 3;
+
     IEnumerator AttackRoutine()
     {
-        Debug.Log("ATTACKING!");
-        yield return null;
+        yield return PathfindTo(World.Instance.boss.position);
+        model.TryAttack();
     }
 
     IEnumerator RestRoutine()
     {
-        Debug.Log("Resting. Zzz...");
-        yield return null;
+        yield return PathfindTo(World.Instance.bed.position);
+        model.TryInteract();
     }
 
     IEnumerator TrainRoutine()
     {
-        Debug.Log("TRAINING...");
-        yield return null;
+        yield return PathfindTo(World.Instance.train.position);
+        model.TryInteract();
     }
 
     IEnumerator BuyRoutine()
     {
-        Debug.Log("Buying.");
-        yield return null;
+        yield return PathfindTo(World.Instance.shop.position);
+        model.TryInteract();
     }
 
     IEnumerator WorkRoutine()
     {
-        Debug.Log("Working... :C");
-        yield return null;
+        yield return PathfindTo(World.Instance.castle.position);
+        model.TryInteract();
     }
 
+
+    List<Vector3> currentPath;
+    IEnumerator PathfindTo(Vector3 targetPos)
+    {
+        currentPath = WaypointMatrix.Instance.GetPositionPathTo(transform.position, targetPos);
+        int pathIndex = 0;
+        while (GetDistance2D(targetPos, transform.position) > distanceToInteract && pathIndex < currentPath.Count)
+        {
+            model.Move((currentPath[pathIndex] - transform.position).normalized);
+            if (GetDistance2D(currentPath[pathIndex], transform.position) < 1)
+                pathIndex++;
+            yield return null;
+        }
+        currentPath = null;
+        model.Face(targetPos - transform.position);
+    }
+
+    public float GetDistance2D(Vector3 a, Vector3 b)
+    {
+        return Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        
+
+        if (currentPath == null) return;
+        Gizmos.color = Color.red;
+        foreach (var node in currentPath)
+        {
+            Gizmos.DrawWireSphere(node, 0.5f);
+        }
+    }
 }

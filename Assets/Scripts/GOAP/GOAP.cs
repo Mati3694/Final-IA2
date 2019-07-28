@@ -30,16 +30,16 @@ public static class GOAP
 
             foreach (var action in actions)
             {
-                if(action.condition(state.Item1))
+                if (action.condition(state.Item1))
                 {
-                    list.Add(((action.effect(state.Item1), action) , action.cost));
+                    list.Add(((action.effect(state.Item1), action), action.cost));
                 }
             }
 
             return list;
         };
-        var result = AStar.Run(fakeInitialState, fakeSatisfies, expand, fakeHeuristic, maxSteps);
-        if(result == null)
+        var result = AStar.Run(fakeInitialState, fakeSatisfies, expand, fakeHeuristic, (n) => true, maxSteps);
+        if (result == null)
             return null;
         return result.Skip(1).Select(t => t.Item2).ToList();
     }

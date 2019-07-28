@@ -16,5 +16,4 @@ public struct WorldState
 
     //ENEMY
     public float bossLife;
-    public float bossAtk;
 }
