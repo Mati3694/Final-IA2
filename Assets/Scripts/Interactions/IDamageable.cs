@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void ReceiveDmg(float dmg, CharacterModel model);
+    IEnumerator ReceiveDmg(float dmg, CharacterModel model);
 }

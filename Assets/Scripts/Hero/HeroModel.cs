@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeroModel : CharacterModel
 {
+    
+
     [ReadOnly]
     public float playerBaseAtk;
     [ReadOnly]
@@ -20,6 +22,7 @@ public class HeroModel : CharacterModel
     Rigidbody rb;
     [Header("Refs")]
     public GameObject sword;
+    public Animator ani;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -27,7 +30,7 @@ public class HeroModel : CharacterModel
     [Header("Interaction")]
     public float interactionRange = 1f;
 
-    
+
 
     public float PlayerAtk { get { return (playerBaseAtk * (playerSeriouslyInjured ? 0.5f : 1f)) + (currentWeapon == "Sword" ? World.Config.swordAtkDmg : 0); } }
 
@@ -43,8 +46,8 @@ public class HeroModel : CharacterModel
 
     public void ResetModel(WorldStateConfig config)
     {
-        characterMaxLife = config.playerMaxLife;
-        characterCurrLife = characterMaxLife;
+        CharacterMaxLife = config.playerMaxLife;
+        CharacterCurrLife = CharacterMaxLife;
         playerSeriouslyInjured = false;
 
         playerBaseAtk = config.playerBaseAtk;
@@ -85,7 +88,7 @@ public class HeroModel : CharacterModel
     }
 
     Collider[] results = new Collider[10];
-    public void TryInteract()
+    public IEnumerator TryInteract()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position, interactionRange, results) > 0)
         {
@@ -94,12 +97,12 @@ public class HeroModel : CharacterModel
                 if (col == null) continue;
                 var interactable = col.GetComponentInParent<IInteractable>();
                 if (interactable == null) continue;
-                interactable.Interact(this);
+                yield return interactable.Interact(this);
             }
         }
     }
 
-    public void TryAttack()
+    public IEnumerator TryAttack()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position, interactionRange, results) > 0)
         {
@@ -109,17 +112,23 @@ public class HeroModel : CharacterModel
                 var damageable = col.GetComponentInParent<IDamageable>();
                 if (damageable == null) continue;
                 if (damageable == this) continue;
-                damageable.ReceiveDmg(PlayerAtk, this);
+                ani.Play("Hero_Attack");
+                yield return new WaitForSeconds(0.5f);
+                yield return damageable.ReceiveDmg(PlayerAtk, this);
                 ConsumeWeapon(1);
             }
+            yield break;
         }
     }
 
-    public override void ReceiveDmg(float dmg, CharacterModel model)
+    public override IEnumerator ReceiveDmg(float dmg, CharacterModel model)
     {
-        base.ReceiveDmg(dmg, model);
-        if (characterCurrLife < World.Config.playerInjuredLife)
+        yield return base.ReceiveDmg(dmg, model);
+        if (CharacterCurrLife < World.Config.playerInjuredLife)
             playerSeriouslyInjured = true;
+        
+        FXManager.ShowPopupAt(transform.position, "-" + dmg + " HP", 2, Color.red);
+        yield return null;
     }
 
     public void ConsumeWeapon(int usesConsumed)
@@ -137,6 +146,11 @@ public class HeroModel : CharacterModel
     {
         currentWeapon = "Sword";
         sword.SetActive(true);
+    }
+
+    protected override void Death()
+    {
+        ani.Play("Hero_Death");
     }
 
     private void OnDrawGizmos()

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractable 
 {
-    void Interact(HeroModel model);
+    IEnumerator Interact(HeroModel model);
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HeroController : MonoBehaviour
 {
@@ -100,8 +101,11 @@ public class HeroController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (currentActionsList == null && Input.GetKeyDown(KeyCode.Space))
             CalculateGOAP();
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
 
@@ -158,31 +162,31 @@ public class HeroController : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         yield return PathfindTo(World.Instance.boss.position);
-        model.TryAttack();
+        yield return model.TryAttack();
     }
 
     IEnumerator RestRoutine()
     {
         yield return PathfindTo(World.Instance.bed.position);
-        model.TryInteract();
+        yield return model.TryInteract();
     }
 
     IEnumerator TrainRoutine()
     {
         yield return PathfindTo(World.Instance.train.position);
-        model.TryInteract();
+        yield return model.TryInteract();
     }
 
     IEnumerator BuyRoutine()
     {
         yield return PathfindTo(World.Instance.shop.position);
-        model.TryInteract();
+        yield return model.TryInteract();
     }
 
     IEnumerator WorkRoutine()
     {
         yield return PathfindTo(World.Instance.castle.position);
-        model.TryInteract();
+        yield return model.TryInteract();
     }
 
 
