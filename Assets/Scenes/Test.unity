@@ -2606,7 +2606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ff28a2870983b42a5349a72cf76734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 62edabd862f650144b4839f892ff1726, type: 2}
+  config: {fileID: 11400000, guid: 72f53df6d7a930646afb7738be5901a8, type: 2}
   bed: {fileID: 368183768}
   shop: {fileID: 461819865}
   castle: {fileID: 1988836963}
