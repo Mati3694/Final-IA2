@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
-  m_Name: Config6
+  m_Name: TrainToWin_Config
   m_EditorClassIdentifier: 
   playerMaxLife: 20
   playerBaseAtk: 5
   playerGold: 0
   currentWeapon: None
   weaponUsesRemaining: 0
-  bossMaxLife: 40
-  bossAtk: 40
+  bossMaxLife: 70
+  bossAtk: 8
   bossLifeWeight: 2
   maxSteps: 10000
-  attackCost: 3
-  swordAtkDmg: 4
-  playerInjuredLife: 10
+  attackCost: 2
+  swordAtkDmg: 5
+  playerInjuredLife: 5
   restCost: 5
   restLifeHeal: 10
-  trainCost: 5
+  trainCost: 1
   trainWeaponUses: 10
   trainWithWeaponMultiplier: 2
   trainAtkIncr: 5
-  trainMaxLifeIncr: 2
+  trainMaxLifeIncr: 5
   buyWeaponCost: 1
   buyWeaponGoldNeeded: 20
-  workCost: 2
+  workCost: 3
   workGoldPay: 10
-  swordMaxUses: 15
+  swordMaxUses: 30

@@ -10,27 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
-  m_Name: Config1
+  m_Name: PersistentAttack_Config
   m_EditorClassIdentifier: 
   playerMaxLife: 20
   playerBaseAtk: 5
-  playerGold: 0
+  playerGold: 30
   currentWeapon: None
   weaponUsesRemaining: 0
   bossMaxLife: 50
-  bossAtk: 8
+  bossAtk: 10
   bossLifeWeight: 2
   maxSteps: 10000
-  attackCost: 2
-  swordAtkDmg: 5
-  playerInjuredLife: 5
+  attackCost: 1
+  swordAtkDmg: 3
+  playerInjuredLife: 10
   restCost: 5
   restLifeHeal: 10
   trainCost: 5
-  trainWeaponUses: 10
-  trainAtkIncr: 5
-  trainMaxLifeIncr: 5
-  buyWeaponCost: 1
+  trainWeaponUses: 20
+  trainWithWeaponMultiplier: 1
+  trainAtkIncr: 2
+  trainMaxLifeIncr: 2
+  buyWeaponCost: 2
   buyWeaponGoldNeeded: 20
-  workCost: 3
-  workGoldPay: 10
+  workCost: 2
+  workGoldPay: 15
+  swordMaxUses: 50

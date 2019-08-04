@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
-  m_Name: Config5
+  m_Name: EyeOfTheTiger_Config
   m_EditorClassIdentifier: 
-  playerMaxLife: 20
-  playerBaseAtk: 5
-  playerGold: 0
+  playerMaxLife: 40
+  playerBaseAtk: 3
+  playerGold: 10
   currentWeapon: None
   weaponUsesRemaining: 0
-  bossMaxLife: 40
-  bossAtk: 10
+  bossMaxLife: 70
+  bossAtk: 40
   bossLifeWeight: 2
-  maxSteps: 10000
-  attackCost: 3
-  swordAtkDmg: 4
-  playerInjuredLife: 10
-  restCost: 5
-  restLifeHeal: 10
-  trainCost: 5
-  trainWeaponUses: 10
+  maxSteps: 13000
+  attackCost: 1
+  swordAtkDmg: 5
+  playerInjuredLife: 5
+  restCost: 2
+  restLifeHeal: 15
+  trainCost: 3
+  trainWeaponUses: 15
   trainWithWeaponMultiplier: 2
-  trainAtkIncr: 2
+  trainAtkIncr: 5
   trainMaxLifeIncr: 2
   buyWeaponCost: 1
   buyWeaponGoldNeeded: 20
-  workCost: 2
-  workGoldPay: 10
+  workCost: 1
+  workGoldPay: 13
   swordMaxUses: 15

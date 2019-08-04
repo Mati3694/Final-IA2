@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
-  m_Name: Config4
+  m_Name: Classic_Config
   m_EditorClassIdentifier: 
   playerMaxLife: 20
   playerBaseAtk: 5
   playerGold: 0
   currentWeapon: None
   weaponUsesRemaining: 0
-  bossMaxLife: 50
+  bossMaxLife: 60
   bossAtk: 10
   bossLifeWeight: 2
   maxSteps: 10000
@@ -28,10 +28,11 @@ MonoBehaviour:
   restLifeHeal: 10
   trainCost: 5
   trainWeaponUses: 10
-  trainAtkIncr: 2
-  trainMaxLifeIncr: 2
+  trainWithWeaponMultiplier: 2
+  trainAtkIncr: 5
+  trainMaxLifeIncr: 5
   buyWeaponCost: 1
   buyWeaponGoldNeeded: 20
-  workCost: 2
+  workCost: 3
   workGoldPay: 10
-  swordMaxUses: 15
+  swordMaxUses: 30

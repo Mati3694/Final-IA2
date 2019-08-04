@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
-  m_Name: Config7
+  m_Name: MoneyPower_Config
   m_EditorClassIdentifier: 
-  playerMaxLife: 40
-  playerBaseAtk: 3
-  playerGold: 10
+  playerMaxLife: 20
+  playerBaseAtk: 1
+  playerGold: 0
   currentWeapon: None
   weaponUsesRemaining: 0
-  bossMaxLife: 70
-  bossAtk: 40
+  bossMaxLife: 90
+  bossAtk: 10
   bossLifeWeight: 2
-  maxSteps: 13000
-  attackCost: 1
-  swordAtkDmg: 5
-  playerInjuredLife: 5
-  restCost: 2
-  restLifeHeal: 15
-  trainCost: 3
-  trainWeaponUses: 15
-  trainWithWeaponMultiplier: 2
-  trainAtkIncr: 5
+  maxSteps: 15000
+  attackCost: 3
+  swordAtkDmg: 100
+  playerInjuredLife: 10
+  restCost: 1
+  restLifeHeal: 10
+  trainCost: 5
+  trainWeaponUses: 20
+  trainWithWeaponMultiplier: 1
+  trainAtkIncr: 2
   trainMaxLifeIncr: 2
-  buyWeaponCost: 1
-  buyWeaponGoldNeeded: 20
-  workCost: 1
-  workGoldPay: 13
-  swordMaxUses: 15
+  buyWeaponCost: 4
+  buyWeaponGoldNeeded: 70
+  workCost: 2
+  workGoldPay: 10
+  swordMaxUses: 50
