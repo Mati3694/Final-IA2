@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac92ce60d672e1d428244f85ae5ac582, type: 3}
+  m_Name: Config7
+  m_EditorClassIdentifier: 
+  playerMaxLife: 40
+  playerBaseAtk: 3
+  playerGold: 10
+  currentWeapon: None
+  weaponUsesRemaining: 0
+  bossMaxLife: 70
+  bossAtk: 40
+  bossLifeWeight: 2
+  maxSteps: 13000
+  attackCost: 1
+  swordAtkDmg: 5
+  playerInjuredLife: 5
+  restCost: 2
+  restLifeHeal: 15
+  trainCost: 3
+  trainWeaponUses: 15
+  trainWithWeaponMultiplier: 2
+  trainAtkIncr: 5
+  trainMaxLifeIncr: 2
+  buyWeaponCost: 1
+  buyWeaponGoldNeeded: 20
+  workCost: 1
+  workGoldPay: 13
+  swordMaxUses: 15
