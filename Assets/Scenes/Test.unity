@@ -2611,7 +2611,7 @@ MonoBehaviour:
   shop: {fileID: 461819865}
   castle: {fileID: 1988836963}
   train: {fileID: 1265783274}
-  boss: {fileID: 1830443013}
+  boss: {fileID: 1830443014}
 --- !u!4 &849345822
 Transform:
   m_ObjectHideFlags: 0
@@ -4586,6 +4586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1525703106}
+  logWorldState: 1
   distanceToInteract: 3
 --- !u!114 &1525703106
 MonoBehaviour:

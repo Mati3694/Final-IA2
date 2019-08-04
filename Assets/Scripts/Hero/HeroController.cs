@@ -11,6 +11,8 @@ public class HeroController : MonoBehaviour
 
     public Vector2 Position2D { get { return new Vector2(transform.position.x, transform.position.z); } }
 
+    public bool logWorldState = false;
+
     WorldState initialState;
     List<GoapAction<WorldState>> actions;
 
@@ -145,23 +147,26 @@ public class HeroController : MonoBehaviour
     {
         if (currentActionsList == null) yield break;
         Debug.Log("--Executing GOAP...--".Bold());
+
+        if (logWorldState) { Debug.Log("Initial State".Bold()); LogWorldState(); }
+
         foreach (var action in currentActionsList)
         {
-            //Debug.Log("Executing action : " + action.name);
             yield return actionRoutineDict[action.name]();
-            //Debug.Log("Waiting for " + action.cost + " seconds");
-            //yield return new WaitForSeconds(action.cost);
+
+            if (logWorldState) { LogActionCost(action); LogWorldState(); }
+
             yield return new WaitForSeconds(1);
         }
 
-        Debug.Log("Finished GOAP");
+        Debug.Log("--Finished GOAP--".Bold());
     }
 
     public float distanceToInteract = 3;
 
     IEnumerator AttackRoutine()
     {
-        yield return PathfindTo(World.Instance.boss.position);
+        yield return PathfindTo(World.Instance.boss.transform.position);
         yield return model.TryAttack();
     }
 
@@ -211,10 +216,28 @@ public class HeroController : MonoBehaviour
         return Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
     }
 
+    private void LogActionCost(GoapAction<WorldState> action)
+    {
+        float heuristic = World.Instance.boss.CharacterCurrLife / World.Instance.boss.CharacterMaxLife * World.Config.bossLifeWeight;
+        Debug.Log(($"{ action.name} // Cost({action.cost}) - Heu({heuristic})").Bold());
+    }
+
+    private void LogWorldState()
+    {
+        Debug.Log("WORLD STATE :".Colored(Color.white));
+        Debug.Log("Player Max Life : " + model.CharacterMaxLife);
+        Debug.Log("Player Current Life : " + model.CharacterCurrLife);
+        Debug.Log("Player Base Atk : " + model.playerBaseAtk);
+        Debug.Log("Player Gold : " + model.playerGold);
+        Debug.Log("Player Is Injured : " + model.playerSeriouslyInjured);
+        Debug.Log("Player Current Weapon : " + model.currentWeapon + " (" + model.weaponUsesRemaining + " uses left)");
+        Debug.Log("Boss Current Life : " + World.Instance.boss.CharacterCurrLife);
+        Debug.Log("-------------".Colored(Color.white));
+    }
 
     private void OnDrawGizmos()
     {
-        
+
 
         if (currentPath == null) return;
         Gizmos.color = Color.red;

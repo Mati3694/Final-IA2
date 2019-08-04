@@ -23,5 +23,5 @@ public class World : MonoBehaviour
     public Transform shop;
     public Transform castle;
     public Transform train;
-    public Transform boss;
+    public BossModel boss;
 }
