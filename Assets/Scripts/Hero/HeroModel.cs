@@ -112,6 +112,7 @@ public class HeroModel : CharacterModel
                 var damageable = col.GetComponentInParent<IDamageable>();
                 if (damageable == null) continue;
                 if (damageable == this) continue;
+
                 ani.Play("Hero_Attack");
                 yield return new WaitForSeconds(0.5f);
                 yield return damageable.ReceiveDmg(PlayerAtk, this);

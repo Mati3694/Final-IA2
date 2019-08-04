@@ -10,8 +10,8 @@ public class Shop : MonoBehaviour, IInteractable
             Debug.LogWarning("SHOP// There's not enough gold to buy");
             yield break;
         }
-        Debug.Log("SHOP// Buying weapon");
         yield return new WaitForSeconds(1);
+        Debug.Log("SHOP// Buying weapon");
 
         model.playerGold -= World.Config.buyWeaponGoldNeeded;
         model.GetWeapon();
