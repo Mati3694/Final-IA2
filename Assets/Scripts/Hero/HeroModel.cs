@@ -23,6 +23,7 @@ public class HeroModel : CharacterModel
     [Header("Refs")]
     public GameObject sword;
     public Animator ani;
+    public ParticleSystem bloodParticles;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -42,6 +43,7 @@ public class HeroModel : CharacterModel
         rb = GetComponent<Rigidbody>();
         startPos = transform.position;
         sword.SetActive(currentWeapon == "Sword");
+        bloodParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
     public void ResetModel(WorldStateConfig config)
@@ -127,7 +129,7 @@ public class HeroModel : CharacterModel
     {
         yield return base.ReceiveDmg(dmg, model);
         if (CharacterCurrLife < World.Config.playerInjuredLife)
-            playerSeriouslyInjured = true;
+        { playerSeriouslyInjured = true; bloodParticles.Play(); }
 
         FXManager.ShowPopupAt(transform.position, "-" + dmg + " HP", 2, Color.red);
         yield return null;
@@ -155,8 +157,12 @@ public class HeroModel : CharacterModel
         Vector3 lastPos = transform.position;
         Quaternion lastRot = transform.rotation;
         transform.position = bed.SleepPos;
-        transform.rotation = bed.transform.rotation * Quaternion.Euler(-90,0,0);
+        transform.rotation = bed.transform.rotation * Quaternion.Euler(-90, 0, 0);
         rb.isKinematic = true;
+
+
+        if (bloodParticles.isEmitting)
+            bloodParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
 
         yield return new WaitForSeconds(2);
 
@@ -166,6 +172,7 @@ public class HeroModel : CharacterModel
 
         CharacterCurrLife = Mathf.Clamp(CharacterCurrLife + World.Config.restLifeHeal, 0, CharacterMaxLife);
         playerSeriouslyInjured = false;
+
     }
 
     protected override void Death()
