@@ -150,6 +150,24 @@ public class HeroModel : CharacterModel
         sword.SetActive(true);
     }
 
+    public IEnumerator Sleep(Bed bed)
+    {
+        Vector3 lastPos = transform.position;
+        Quaternion lastRot = transform.rotation;
+        transform.position = bed.SleepPos;
+        transform.rotation = bed.transform.rotation * Quaternion.Euler(-90,0,0);
+        rb.isKinematic = true;
+
+        yield return new WaitForSeconds(2);
+
+        rb.isKinematic = false;
+        transform.position = lastPos;
+        transform.rotation = lastRot;
+
+        CharacterCurrLife = Mathf.Clamp(CharacterCurrLife + World.Config.restLifeHeal, 0, CharacterMaxLife);
+        playerSeriouslyInjured = false;
+    }
+
     protected override void Death()
     {
         ani.Play("Hero_Death");

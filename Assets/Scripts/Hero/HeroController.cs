@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class HeroController : MonoBehaviour
 {
-
     public HeroModel model;
 
     public Vector2 Position2D { get { return new Vector2(transform.position.x, transform.position.z); } }
@@ -237,8 +236,6 @@ public class HeroController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-
-
         if (currentPath == null) return;
         Gizmos.color = Color.red;
         foreach (var node in currentPath)
