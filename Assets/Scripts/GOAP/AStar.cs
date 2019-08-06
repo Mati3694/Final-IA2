@@ -9,7 +9,6 @@ public static class AStar
 			Func<Node, bool> satisfies,
 			Func<Node, IEnumerable<(Node, float)>> expand,
 			Func<Node, float> heuristic,
-            Func<Node, bool> isValid,
             int maxSteps = 5000
 		)
 	{

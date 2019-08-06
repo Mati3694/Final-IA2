@@ -2013,23 +2013,10 @@ MonoBehaviour:
   gridCenter: {fileID: 674317920}
   AI_GridSizeX: 20
   AI_GridSizeY: 20
-  obstacleDetectionFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  useRadius: 0
-  obstacleDetectionRadius: 0.5
-  gridUpdateTime: 0.5
+  obstacleDetectionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleDetectionRadius: 1
   maxPathfindSteps: 30
   drawGizmos: 1
 --- !u!4 &674317920
@@ -2606,7 +2593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ff28a2870983b42a5349a72cf76734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 72f53df6d7a930646afb7738be5901a8, type: 2}
+  config: {fileID: 11400000, guid: 78dd8558c1e5e034b9579b8941578b86, type: 2}
   bed: {fileID: 368183768}
   shop: {fileID: 461819865}
   castle: {fileID: 1988836963}
@@ -4586,7 +4573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1525703106}
-  logWorldState: 1
+  logWorldState: 0
   distanceToInteract: 3
 --- !u!114 &1525703106
 MonoBehaviour:

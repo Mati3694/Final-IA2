@@ -16,10 +16,11 @@ public class WaypointMatrix : MonoBehaviour
     public int AI_GridSizeX;
     [Range(1, 50)]
     public int AI_GridSizeY;
-    public ContactFilter2D obstacleDetectionFilter = new ContactFilter2D();
-    public bool useRadius;
+    //public ContactFilter2D obstacleDetectionFilter = new ContactFilter2D();
+    //public bool useRadius;
+    public LayerMask obstacleDetectionLayer;
     public float obstacleDetectionRadius = 0.5f;
-    public float gridUpdateTime = 0.5f;
+    //public float gridUpdateTime = 0.5f;
 
     public int maxPathfindSteps = 30;
 
@@ -79,7 +80,7 @@ public class WaypointMatrix : MonoBehaviour
     }
 
 
-    Collider2D[] result = new Collider2D[1];
+    Collider[] result = new Collider[1];
 
 
     private void UpdateNodePosition()
@@ -97,10 +98,10 @@ public class WaypointMatrix : MonoBehaviour
             {
                 currentNode = _nodes[x + y * AI_GridSizeX];
                 currentNode.NodePos = centerPos + new Vector2((x + 1 - AI_GridHalfSizeX) * cellSize, (y + 1 - AI_GridHalfSizeY) * cellSize);
-                if (useRadius ? Physics2D.OverlapCircle(currentNode.NodePos, obstacleDetectionRadius, obstacleDetectionFilter, result) > 0 : Physics2D.OverlapPoint(currentNode.NodePos, obstacleDetectionFilter, result) > 0)
-                    currentNode.IsValid = false;
+                if (Physics.OverlapSphereNonAlloc(NodeToWorldPos(currentNode.NodePos), obstacleDetectionRadius, result, obstacleDetectionLayer) > 0)
+                { currentNode.IsValid = false; }
                 else
-                    currentNode.IsValid = true;
+                { currentNode.IsValid = true; }
             }
         }
     }
@@ -108,7 +109,7 @@ public class WaypointMatrix : MonoBehaviour
     private List<AI_Node> GetPathTo(AI_Node startNode, AI_Node endNode)
     {
         //return ThetaStar.RunWithoutWeight(startNode, n => n == endNode, n => n.Neighbours, n => Vector2.Distance(n.NodePos, endNode.NodePos), IsNodeInSight, (n1, n2) => Vector2.Distance(n1.NodePos, n2.NodePos), n => n.IsValid, maxPathfindSteps);
-        return AStar.Run(startNode, n => n == endNode, n => n.Neighbours.Select(neighbour => (neighbour, 1f)), n => Vector2.Distance(endNode.NodePos, n.NodePos), n => n.IsValid, maxPathfindSteps);
+        return AStar.Run(startNode, n => n == endNode, n => n.Neighbours.Select(neighbour => (neighbour, 1f)), n => Vector2.Distance(endNode.NodePos, n.NodePos), maxPathfindSteps);
     }
 
     private bool IsNodeInSight(AI_Node startNode, AI_Node targetNode)
@@ -171,6 +172,11 @@ public class WaypointMatrix : MonoBehaviour
         return IsNodeInSight(startNode, endNode);
     }
 
+    private Vector3 NodeToWorldPos(Vector2 nodePos)
+    {
+        return new Vector3(nodePos.x, 0, nodePos.y);
+    }
+
     private void OnDrawGizmos()
     {
         if (!drawGizmos) return;
@@ -179,7 +185,7 @@ public class WaypointMatrix : MonoBehaviour
         foreach (var node in _nodes)
         {
             Gizmos.color = node.IsValid ? Color.white : Color.red;
-            Gizmos.DrawWireSphere(new Vector3(node.NodePos.x, 0, node.NodePos.y), 0.1f);
+            Gizmos.DrawWireSphere(NodeToWorldPos(node.NodePos), 0.1f);
 
             Gizmos.color = Color.green;
             //foreach (var n in node.GetNeighbours())

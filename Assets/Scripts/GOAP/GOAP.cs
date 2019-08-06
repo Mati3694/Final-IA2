@@ -38,7 +38,7 @@ public static class GOAP
 
             return list;
         };
-        var result = AStar.Run(fakeInitialState, fakeSatisfies, expand, fakeHeuristic, (n) => true, maxSteps);
+        var result = AStar.Run(fakeInitialState, fakeSatisfies, expand, fakeHeuristic,  maxSteps);
         if (result == null)
             return null;
         return result.Skip(1).Select(t => t.Item2).ToList();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HeroModel : CharacterModel
 {
-    
+
 
     [ReadOnly]
     public float playerBaseAtk;
@@ -98,6 +98,7 @@ public class HeroModel : CharacterModel
                 var interactable = col.GetComponentInParent<IInteractable>();
                 if (interactable == null) continue;
                 yield return interactable.Interact(this);
+                yield break;
             }
         }
     }
@@ -117,8 +118,8 @@ public class HeroModel : CharacterModel
                 yield return new WaitForSeconds(0.5f);
                 yield return damageable.ReceiveDmg(PlayerAtk, this);
                 ConsumeWeapon(1);
+                yield break;
             }
-            yield break;
         }
     }
 
@@ -127,7 +128,7 @@ public class HeroModel : CharacterModel
         yield return base.ReceiveDmg(dmg, model);
         if (CharacterCurrLife < World.Config.playerInjuredLife)
             playerSeriouslyInjured = true;
-        
+
         FXManager.ShowPopupAt(transform.position, "-" + dmg + " HP", 2, Color.red);
         yield return null;
     }
